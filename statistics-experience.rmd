@@ -54,7 +54,22 @@ stations2%>%
   guides(color = "none")
 
 ```
+States that lack alternative energy stations include Arkansas, Montana, Wyoming,Nevada, and Delaware. This can be seen by the sparser dots in the visualization.Arkansas and Delaware will not be getting any new stations, Montana and Wyoming will be getting 2,and Nevada 3.This is compared to 73 new stations in CA, 28 in FL and 22 in NY. It doesn't look like the planned stations are going where there is a geographic lack of stations, but instead 
+mostly to states where there already are a lot of them. 
 
+```{r analysis}
+#states with least alternative energy stations
+stations2%>%
+  group_by(STATE)%>%
+  count(n())%>%
+  arrange((n))
+
+#states with most planned alternative energy stations
+stations3%>%
+  group_by(STATE)%>%
+  count(n())%>%
+  arrange(desc(n))
+```
 credits : 
 
 https://stackoverflow.com/questions/34444295/how-to-specify-does-not-contain-in-dplyr-filter
