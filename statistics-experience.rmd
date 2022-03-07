@@ -2,9 +2,12 @@
 title: "statistics experience"
 author: "Helene Gu"
 date: "03/06/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
+## load libraries and data
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -12,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(viridis)
 ```
-```{r load-data, message = FALSE, warning = F}
+```{r load-data, message = FALSE, warning = F, show_col_types = FALSE }
 stations <- read_csv("~/Labs/tidytuesday/data/2022/2022-03-01/stations.csv")
 ```
 
@@ -21,31 +24,38 @@ stations <- read_csv("~/Labs/tidytuesday/data/2022/2022-03-01/stations.csv")
 ## Tidy Tuesday challenge 03/01
 
 ```{r remove-planned-and-temporarily-unavailable}
+#separate planned/temporarily unavailable
 stations2 <- stations%>%
    filter(!str_detect(GROUPS_WITH_ACCESS_CODE, "TEMPORARILY UNAVAILABLE"))%>%
    filter(!str_detect(GROUPS_WITH_ACCESS_CODE, "PLANNED"))
 
 ```
-```{r exploration }
-names(stations)
-stations%>% 
-  group_by(STATE)
-stations2%>%
-count(CITY)
+```{r planned}
+#planned
+stations3 <- stations%>%
+   filter(str_detect(GROUPS_WITH_ACCESS_CODE, "PLANNED"))%>%
+  mutate(PLANNEDYES = "planned")
+
 ```
 
 ```{r visualization}
+#visualization
 stations2%>%
   group_by(CITY)%>%
   ggplot() +
   geom_point(data = stations2, aes(x = LONGDD, y = LATDD,color=STATE),
              size=0.0001) +
-  labs(title = "Where do we lack alternative energy stations in the US?",
+  geom_point(data = stations3, aes(x = LONGDD, y = LATDD),color="black",
+             size=0.0001)+
+  labs(title = "Are we putting alternative energy stations where we lack them?",
+       subtitle = "black dots = planned energy stations",
          x= "Longitude",
        y="Latitude")+
-  guides(color = FALSE)
+  guides(color = "none")
+
 ```
 
 credits : 
 
 https://stackoverflow.com/questions/34444295/how-to-specify-does-not-contain-in-dplyr-filter
+https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/make-maps-with-ggplot-in-R/
