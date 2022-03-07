@@ -48,7 +48,7 @@ stations2%>%
   geom_point(data = stations3, aes(x = LONGDD, y = LATDD),color="black",
              size=0.0001)+
   labs(title = "Are we putting alternative energy stations where we lack them?",
-       subtitle = "black dots = planned energy stations",
+       subtitle = "Where black dots are planned energy stations",
          x= "Longitude",
        y="Latitude")+
   guides(color = "none")
@@ -57,6 +57,7 @@ stations2%>%
 States that lack alternative energy stations include Arkansas, Montana, Wyoming,Nevada, and Delaware. This can be seen by the sparser dots in the visualization.Arkansas and Delaware will not be getting any new stations, Montana and Wyoming will be getting 2,and Nevada 3.This is compared to 73 new stations in CA, 28 in FL and 22 in NY. It doesn't look like the planned stations are going where there is a geographic lack of stations, but instead 
 mostly to states where there already are a lot of them. 
 
+## Analysis
 ```{r analysis}
 #states with least alternative energy stations
 stations2%>%
