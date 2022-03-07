@@ -1,0 +1,51 @@
+---
+title: "statistics experience"
+author: "Helene Gu"
+date: "03/06/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r packages, message = F, warning = F}
+library(tidyverse)
+library(viridis)
+```
+```{r load-data, message = FALSE, warning = F}
+stations <- read_csv("~/Labs/tidytuesday/data/2022/2022-03-01/stations.csv")
+```
+
+
+
+## Tidy Tuesday challenge 03/01
+
+```{r remove-planned-and-temporarily-unavailable}
+stations2 <- stations%>%
+   filter(!str_detect(GROUPS_WITH_ACCESS_CODE, "TEMPORARILY UNAVAILABLE"))%>%
+   filter(!str_detect(GROUPS_WITH_ACCESS_CODE, "PLANNED"))
+
+```
+```{r exploration }
+names(stations)
+stations%>% 
+  group_by(STATE)
+stations2%>%
+count(CITY)
+```
+
+```{r visualization}
+stations2%>%
+  group_by(CITY)%>%
+  ggplot() +
+  geom_point(data = stations2, aes(x = LONGDD, y = LATDD,color=STATE),
+             size=0.0001) +
+  labs(title = "Where do we lack alternative energy stations in the US?",
+         x= "Longitude",
+       y="Latitude")+
+  guides(color = FALSE)
+```
+
+credits : 
+
+https://stackoverflow.com/questions/34444295/how-to-specify-does-not-contain-in-dplyr-filter
