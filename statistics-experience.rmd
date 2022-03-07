@@ -71,7 +71,14 @@ stations3%>%
   count(n())%>%
   arrange(desc(n))
 ```
-credits : 
+
+data from : 
+https://data-usdot.opendata.arcgis.com/datasets/usdot::alternative-fueling-stations/about
+
+article : 
+https://www.eia.gov/todayinenergy/detail.php?id=6050
+
+additional credits : 
 
 https://stackoverflow.com/questions/34444295/how-to-specify-does-not-contain-in-dplyr-filter
 https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/make-maps-with-ggplot-in-R/
